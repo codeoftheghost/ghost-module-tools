@@ -8,7 +8,7 @@
 # License   : GNU General Public License GPLv3.
 
 # Periksa apakah module .gmod disertakan sebagai parameter
-if [ -z "S1" ]; then
+if [ -z "$1" ]; then
     echo "Usage: $0 <path-to-mmodule.gmo>"
     exit 1
 fi
