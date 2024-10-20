@@ -3,7 +3,7 @@
 # Filename  : gmod-activate.sh
 # Author    : Ghost
 # Date      : 2024-10-20
-# Desc.     : Script ini berfungsi untuk menonaktifkan module .gmod pada distribusi privasi dan anonimitas Ghost Secure Live System (GSLV)
+# Desc.     : Script ini berfungsi untuk menonaktifkan module .gmod pada distribusi privasi dan anonimitas Ghost Secure Live System (GSLS)
 # Version   : 1.0
 # License   : GNU General Public License GPLv3.
 
