@@ -36,7 +36,7 @@ if mountpoint -q "$MOUNT_POINT"; then
 fi
 
 # Hapus direktori mount point dan union jika ada
-rm -rf "$MOUNT_POINT" "$UNIN_DIR"
+rm -rf "$MOUNT_POINT" "$UNION_DIR"
 
 # Dynamic linking dan update cache library
 echo "Updating library cache after deactivation module $MODULE_NAME"
