@@ -30,10 +30,10 @@ APP_LIST_FILE=$(rpm -ql "$APP_NAME")
 # Atur IFS untuk memisahkan berdasarkan newline
 IFS=$'\n'
 
-Lakukan pengulangan untuk dan menyalin file
+# Lakukan pengulangan untuk dan menyalin file
 for ITEM in $APP_LIST_FILE; do
 
-    Melewatkan folder .build-id
+    # Melewatkan folder .build-id
     if [[ "$ITEM" == /usr/lib/.build-id* ]]; then
         continue
     fi
