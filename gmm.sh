@@ -26,6 +26,7 @@ help() {
     echo "Usage:"
     echo "sudo gmm activate path/to/module.sb => to activate module"
     echo "sudo gmm deactivate module-name => to deactivate module"
+    echo "sudo gmm add application-name => to add new application into new module"
     echo "sudo gmm help => to see how to use this tool"
     echo ""
     exit 1
@@ -41,7 +42,7 @@ wrongInput() {
 activateModule() {
     MODULE_PATH=$1
     MODULE_NAME=$(basename "$MODULE_PATH")
-    MOUNT_POINT="mnt/$MODULE_NAME"
+    MOUNT_POINT="/mnt/$MODULE_NAME"
     
     if [ -z "$MODULE_PATH" ]; then
         echo "Error: Module path not given as parameter"
@@ -126,6 +127,59 @@ deacivate() {
     fi
 }
 
+add() {
+    APP_NAME=$1
+
+    if [ -z "$APP_NAME" ]; then
+        echo "Error: Application name not given as parameter."
+        echo "Usage: sudo gmm add app-name"
+        echo ""
+        wrongInput
+    fi
+
+    # Cek apakah aplikasi terpasang beserta versinya
+    if command -v "$APP_NAME" &> /dev/null; then
+        APP_VERSION=$("$APP_NAME" --version 2>&1 | head -n 1)
+        echo "$APP_NAME found with version: $APP_VERSION"
+    else
+        echo "Error: The $APP_NAME is not found or has not been installed. Check the $APP_NAME name or install it first, so that gmm tool can add it to module."
+        echo ""
+        wrongInput
+    fi
+
+    # Set variabel direktori aplikasi
+    APP_PATH_MODULE="/tmp/ghost/module/$MODULE_NAME/"
+
+    # Buat direktori utama module
+    if [[ ! -d "$APP_PATH_MODULE" ]]; then
+        mkdir -p "$APP_PATH_MODULE"
+    fi
+
+    # Buat list dari semua file aplikasi yang terinstal di sistem
+    APP_FILE_LIST=$(rpm -ql "$APP_NAME")
+
+    # Set IFS untuk memisahkan APP_FILE_LIST berdasarkan baris baru
+    IFS=$'\n'
+
+    # Perulangan untuk menyain file aplikasi ke direktori module
+    for ITEM in $APP_FILE_LIST; do
+        # melewatkan semua file di direktori .build-id
+        if [[ "$ITEM" == /usr/lib/.build-id* ]]; then
+            continue
+        fi
+
+        mkdir -p "$APP_PATH_MODULE$(dirname "$ITEM")"
+        cp --parents -r "$ITEM" "$APP_PATH_MODULE"
+    done
+
+    # Kembalikan IFS ke default
+    unset IFS
+
+    echo "$APP_NAME successfully added to module."
+    echo "Add other applications or generate modules with the 'create' command."
+    echo ""
+}
+
 if [ -z "$1" ]; then
     wrongInput
 fi
@@ -136,6 +190,9 @@ case "$1" in
         ;;
     "deactivate")
         deacivate "$2"
+        ;;
+    "add")
+        add "$2"
         ;;
     "help")
         help
