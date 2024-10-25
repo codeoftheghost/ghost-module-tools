@@ -3,7 +3,7 @@
 # Filename  : gmod-add.sh
 # Author    : Ghost
 # Date      : 2024-10-22
-# Desc.     : Script ini berfungsi untuk membuat module .gmod pada distribusi privasi dan anonimitas Ghost Secure Live System (GSLS)
+# Desc.     : Script ini berfungsi untuk membuat module .sb pada distribusi privasi dan anonimitas Ghost Secure Live System (GSLS)
 # Version   : 1.0
 # License   : GNU General Public License GPLv3.
 
@@ -26,7 +26,7 @@ NEW_MODULE_NAME=$2
 echo "Begin process to create new module."
 echo ""
 
-mksquashfs "$1" "$2".gmod -comp xz -e "lost+found"
+mksquashfs "$1" "$2".sb -comp xz -e "lost+found"
 
 echo ""
-echo "New module $2.gmod successfully creted."
+echo "New module $2.sb successfully creted."
