@@ -27,6 +27,7 @@ help() {
     echo "sudo gmm activate path/to/module.sb => to activate module"
     echo "sudo gmm deactivate module-name => to deactivate module"
     echo "sudo gmm add application-name => to add new application into new module"
+    echo "sudo gmm create new-module-name => to create new module"
     echo "sudo gmm help => to see how to use this tool"
     echo ""
     exit 1
@@ -180,6 +181,49 @@ add() {
     echo ""
 }
 
+# Fungsi untuk membuat module baru
+create() {
+    MODULE_NAME=$1
+
+    if [ -z "$MODULE_NAME" ]; then
+        echo "Error: Name of new module not given as parameter"
+        echo "Usage: sudo gmm create name-of-new-module"
+        echo ""
+        wrongInput
+    fi
+
+    # Cek apakah direktori module ada dan memiliki isi
+    if [ -d "/mnt/module/ghost/"]; then
+        echo "Module directory found."
+
+        if [ "$(ls -A /mnt/module/ghost/)" ]; then
+            echo "List of included Applications added to the module:"
+            echo ""
+        else
+            echo "Module directory found, but no application added."
+            echo "Add an application first before generating a new model."
+            echo "Usage: mmg help to see fullhelp."
+            echo ""
+            exit 1
+        fi
+    else
+        echo "Module directory not found."
+        echo "Create it's first and add some application before generate it."
+        echo "Usage: mmg help to see fullhelp."
+        echo ""
+        exit 1
+    fi
+
+    # Mulai proses untuk membuat modul baru
+    echo "Begin process to create new module $MODULE_NAME."
+    echo ""
+
+    mksquashfs /tmp/module/ghost/ "$MODULE_NAME".sb -comp xz -e "lost+found"
+
+    echo ""
+    echo "New module $MODULE_NAME.sb successfully created."
+}
+
 if [ -z "$1" ]; then
     wrongInput
 fi
@@ -193,6 +237,9 @@ case "$1" in
         ;;
     "add")
         add "$2"
+        ;;
+    "create")
+        create "$2"
         ;;
     "help")
         help
