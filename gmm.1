@@ -1,0 +1,44 @@
+.TH gmm 1 "October 20, 2024" "Version 1.0" "User Commands"
+.SH NAME
+gmm \- Ghost Module Manager, a tool for managing modules in the Ghost Secure Live System (GSLS)
+.SH SYNOPSIS
+.B gmm
+.RB [ COMMAND ]
+.RB [ OPTION ]
+.SH DESCRIPTION
+Ghost Module Manager (gmm) is a bash script used to manage modules in the privacy and anonymity distribution system "Ghost Secure Live System (GSLS)".
+This tool supports activating, deactivating, adding applications to module, and creating new modules.
+.SH COMMANDS
+.TP
+\fBactivate\fR \fIpath/to/module.sb\fR
+Activates a module by specifying the path to the module file in .sb format.
+.TP
+\fBdeactivate\fR \fImodule-name\fR
+Deactivates an active module by specifying the module name.
+.TP
+\fBadd\fR \fIapplication-name\fR
+Adds an application to a module by providing the application name.
+.TP
+\fBcreate\fR \fInew-module-name\fR
+Creates a new module with the specified name.
+.TP
+\fBhelp\fR
+Displays brief usage guidance for gmm.
+.SH EXAMPLES
+Usage examples:
+.PP
+\fBgmm activate /path/to/module.sb\fR
+Activates the module located at \fI/path/to/module.sb\fR.
+.PP
+\fBgmm deactivate module-name\fR
+Deactivates the module named \fImodule-name\fR.
+.PP
+\fBgmm add application-name\fR
+Adds an application named \fIapplication-name\fR to a module.
+.PP
+\fBgmm create new-module\fR
+Creates a new module named \fInew-module\fR.
+.SH AUTHOR
+Ghost
+.SH LICENSE
+GNU General Public License GPLv3
